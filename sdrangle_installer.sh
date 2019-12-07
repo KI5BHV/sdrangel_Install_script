@@ -7,6 +7,10 @@ PROC=$(nproc)
 sudo apt remove sdrangel
 sudo snap remove sdrangel 
 
+# remove all data 
+sudo rm -r /opt/build
+sudo rm -r /opt/install
+sudo rm /usr/local/bin/sdrangel
 
 # making direcroties
 sudo mkdir -p /opt/build
@@ -16,7 +20,9 @@ sudo chown $USER:$USER /opt/install
 
 
 # install prerequisrites
-sudo apt-get update && sudo apt-get -y install git cmake g++ pkg-config autoconf automake libtool libfftw3-dev libusb-1.0-0-dev libusb-dev qt5-default qtbase5-dev qtchooser libqt5multimedia5-plugins qtmultimedia5-dev libqt5websockets5-dev qttools5-dev qttools5-dev-tools libqt5opengl5-dev qtbase5-dev libboost-all-dev libasound2-dev pulseaudio libopencv-dev libxml2-dev bison flex ffmpeg libavcodec-dev libavformat-dev libopus-dev
+sudo apt-get update 
+
+sudo apt-get -y install git cmake g++ pkg-config autoconf automake libtool libfftw3-dev libusb-1.0-0-dev libusb-dev qt5-default qtbase5-dev qtchooser libqt5multimedia5-plugins qtmultimedia5-dev libqt5websockets5-dev qttools5-dev qttools5-dev-tools libqt5opengl5-dev qtbase5-dev libboost-all-dev libasound2-dev pulseaudio libopencv-dev libxml2-dev bison flex ffmpeg libavcodec-dev libavformat-dev libopus-dev
 
 
 
@@ -238,6 +244,8 @@ cmake -Wno-dev -DDEBUG_OUTPUT=ON -DRX_SAMPLE_24BIT=ON \
 -DCODEC2_DIR=/opt/install/codec2 \
 -DCMAKE_INSTALL_PREFIX=/opt/install/sdrangel ..
 make -j $PROC install
+
+sudo rm -r /opt/build/
 
 sudo touch /usr/local/bin/sdrangel
 sudo chmod 755 /usr/local/bin/sdrangel
