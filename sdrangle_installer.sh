@@ -3,7 +3,9 @@ USER=$(whoami)
 PROC=$(nproc) 
 #PROC=2
 
-
+# remove all other sdrangel
+sudo apt remove sdrangel
+sudo snap remove sdrangel 
 
 
 # making direcroties
@@ -71,6 +73,7 @@ make -j $PROC install
 
 
 ## Hardware ##
+
 cd /opt/build
 git clone https://github.com/f4exb/libmirisdr-4.git
 cd libmirisdr-4
@@ -78,7 +81,7 @@ mkdir build; cd build
 cmake -Wno-dev -DCMAKE_INSTALL_PREFIX=/opt/install/libmirisdr ..
 make -j $PROC install
 
-
+# rtl-sdr
 cd /opt/build
 git clone https://github.com/osmocom/rtl-sdr.git librtlsdr
 cd librtlsdr
@@ -109,8 +112,7 @@ make -j $PROC install
 cd /opt/build
 git clone https://github.com/myriadrf/LimeSuite.git
 cd LimeSuite
-#git reset --hard "v19.01.0"
-mkdir builddir; cd builddir
+
 cmake -Wno-dev -DCMAKE_INSTALL_PREFIX=/opt/install/LimeSuite ..
 make -j $PROC install
 
@@ -237,8 +239,6 @@ cmake -Wno-dev -DDEBUG_OUTPUT=ON -DRX_SAMPLE_24BIT=ON \
 -DCMAKE_INSTALL_PREFIX=/opt/install/sdrangel ..
 make -j $PROC install
 
-
-
-
-
-
+sudo touch /usr/local/bin/sdrangel
+sudo chmod 755 /usr/local/bin/sdrangel
+echo '/opt/install/sdrangel/bin/sdrangel' | sudo tee /usr/local/bin/sdrangel
